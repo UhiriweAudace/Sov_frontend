@@ -1,0 +1,15 @@
+query GetAllPeople ($where: UserFilter) {
+	users(where: $where) {
+		page_info {
+			totalCount
+		}
+		edges {
+			name
+			height
+			mass
+			gender
+			homeworld
+		}
+	}
+}
+

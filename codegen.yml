@@ -1,0 +1,15 @@
+overwrite: true
+schema: ${REACT_APP_BACKEND_API_URL}
+documents: "**/*.{gql,graphql}"
+generates:
+  src/graphql/generated/schema.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+config:
+  skipTypename: true
+  namingConvention:
+    typeNames: change-case-all#pascalCase
+    enumValues: change-case-all#upperCase
+    transformUnderscore: true

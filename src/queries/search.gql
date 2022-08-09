@@ -1,0 +1,14 @@
+query SearchPeople($keyword: String!) {
+	search(keyword: $keyword) {
+		page_info {
+			totalCount
+		}
+		edges {
+			name
+			gender
+			height
+			mass
+			homeworld
+		}
+	}
+}
