@@ -26,7 +26,6 @@ const Pagination: FC<IProps> = ({ fetchPerson, totalPageNumber }) => {
 
 
   const getPageNumber = () => {
-    console.log({ currentPage, PAGE_LIMIT })
     let start = Math.floor((currentPage - 1) / PAGE_LIMIT) * PAGE_LIMIT;
     return Array.from({ length: PAGE_LIMIT }, (_, k) => start + k + 1);
   };
