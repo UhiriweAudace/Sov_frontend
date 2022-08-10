@@ -6,17 +6,20 @@ import reportWebVitals from './reportWebVitals';
 import { ApolloProvider } from '@apollo/client';
 import { client } from './apollo';
 import { PeopleProvider } from './context';
+import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
-      <PeopleProvider>
-        <App />
-      </PeopleProvider>
-    </ApolloProvider>
+    <BrowserRouter>
+      <ApolloProvider client={client}>
+        <PeopleProvider>
+          <App />
+        </PeopleProvider>
+      </ApolloProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

@@ -1,6 +1,7 @@
 import clsx from "clsx";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { RiArrowLeftCircleLine, RiArrowRightCircleLine } from "react-icons/ri";
+import { useAppContext } from "../context";
 
 interface IProps {
   totalPageNumber: number;
@@ -10,7 +11,8 @@ interface IProps {
 const PAGE_LIMIT = 5;
 
 const Pagination: FC<IProps> = ({ fetchPerson, totalPageNumber }) => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const { currentPage: page } = useAppContext()
+  const [currentPage, setCurrentPage] = useState(page === 0 ? 1 : page);
 
   const goToNextPage = () => {
     if (totalPageNumber < currentPage + 1) return;
@@ -24,12 +26,15 @@ const Pagination: FC<IProps> = ({ fetchPerson, totalPageNumber }) => {
     setCurrentPage((page) => page - 1);
   }
 
-
   const getPageNumber = () => {
     let start = Math.floor((currentPage - 1) / PAGE_LIMIT) * PAGE_LIMIT;
     return Array.from({ length: PAGE_LIMIT }, (_, k) => start + k + 1);
   };
 
+  useEffect(() => {
+    if(page) setCurrentPage(page)
+  }, [page])
+  
   return (
     <div className="flex gap-5 items-center">
       <RiArrowLeftCircleLine size={30} onClick={goToPreviousPage} className="hover:cursor-pointer" />

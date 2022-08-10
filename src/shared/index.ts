@@ -18,3 +18,5 @@ export type User = {
 };
 
 export type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
+
+export type SelectChangeEvent = React.ChangeEvent<HTMLSelectElement>;

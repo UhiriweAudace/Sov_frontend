@@ -1,28 +1,53 @@
-import { useAppContext } from '../context';
-import { InputChangeEvent } from '../shared';
-import { debounce } from '../utils';
+import { useNavigate } from "react-router-dom";
+import { useAppContext } from "../context";
+import { InputChangeEvent, SelectChangeEvent } from "../shared";
+import { debounce } from "../utils";
 
 const SearchInput = () => {
   const { currentPage, totalCount, fetchPerson, searchPerson } = useAppContext();
-  const onChange = debounce((e: InputChangeEvent) => searchPerson(e.target.value), 250)
+  let navigate = useNavigate();
+  const onSearchHandler = debounce((e: InputChangeEvent) => {
+    navigate("/");
+    searchPerson(e.target.value)
+  }, 250);
+
+  const onChangePageHandler = (e: SelectChangeEvent) => {
+    navigate("/");
+    fetchPerson(parseInt(e.target.value))
+  }
 
   return (
-    <div className="flex flex-col justify-between items-center xl:w-1/5 md:w-1/3 gap-4">
-      <div className="flex flex-row justify-between items-center gap-10 w-full">
-        <span className="text-mdl font-bold text-gray-60 ">
-          Search person
-        </span>
+    <div className="flex flex-col items-center justify-between gap-4 md:w-1/3 xl:w-1/5">
+      <div className="flex w-full flex-row items-center justify-between gap-10">
+        <span className="text-mdl text-gray-60 font-bold ">Search person</span>
         <div>
-          <select name="page" className="border border-gray-300 w-20 rounded-md p-1 outline-none" onChange={({ target: { value } }) => fetchPerson(parseInt(value))}>
-            {Array.from({ length: Math.ceil(totalCount / 10) },
-              (_v, k) => (<option key={`key_${k}`} value={k + 1} className="text-base" selected={currentPage === k + 1}>Page {k + 1}</option>)
-            )}
+          <select
+            name="page"
+            onChange={onChangePageHandler}
+            className="w-20 rounded-md border border-gray-300 p-1 outline-none"
+          >
+            {Array.from({ length: Math.ceil(totalCount / 10) }, (_v, k) => (
+              <option
+                value={k + 1}
+                key={`key_${k}`}
+                className="text-base"
+                selected={currentPage === k + 1}
+              >
+                Page {k + 1}
+              </option>
+            ))}
           </select>
         </div>
       </div>
-      <input type="text" name="keyword" className="border border-gray-400 w-full rounded-md p-2 outline-none text-gray-600 italic" onChange={onChange} placeholder="type person's name" />
+      <input
+        type="text"
+        name="keyword"
+        onChange={onSearchHandler}
+        placeholder="type person's name"
+        className="w-full rounded-md border border-gray-400 p-2 italic text-gray-600 outline-none"
+      />
     </div>
-  )
-}
+  );
+};
 
-export default SearchInput
+export default SearchInput;
