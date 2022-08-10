@@ -8,7 +8,7 @@ const SearchInput = () => {
   let navigate = useNavigate();
   const onSearchHandler = debounce((e: InputChangeEvent) => {
     navigate("/");
-    searchPerson(e.target.value)
+    searchPerson(e.target.value.trim())
   }, 250);
 
   const onChangePageHandler = (e: SelectChangeEvent) => {
