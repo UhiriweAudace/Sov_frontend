@@ -17,6 +17,4 @@ export type User = {
 	homeworld?: string | null;
 };
 
-export type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
-
-export type SelectChangeEvent = React.ChangeEvent<HTMLSelectElement>;
+export type OnChangeEvent<T> = React.ChangeEvent<T>;

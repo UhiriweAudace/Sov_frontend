@@ -1,17 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../context";
-import { InputChangeEvent, SelectChangeEvent } from "../shared";
+import { OnChangeEvent } from "../shared";
 import { debounce } from "../utils";
 
 const SearchInput = () => {
   const { currentPage, totalCount, fetchPerson, searchPerson } = useAppContext();
   let navigate = useNavigate();
-  const onSearchHandler = debounce((e: InputChangeEvent) => {
+  const onSearchHandler = debounce((e: OnChangeEvent<HTMLInputElement>) => {
     navigate("/");
     searchPerson(e.target.value.trim())
   }, 250);
 
-  const onChangePageHandler = (e: SelectChangeEvent) => {
+  const onChangeHandler = (e: OnChangeEvent<HTMLSelectElement>) => {
     navigate("/");
     fetchPerson(parseInt(e.target.value))
   }
@@ -23,7 +23,7 @@ const SearchInput = () => {
         <div>
           <select
             name="page"
-            onChange={onChangePageHandler}
+            onChange={onChangeHandler}
             className="w-20 rounded-md border border-gray-300 p-1 outline-none"
           >
             {Array.from({ length: Math.ceil(totalCount / 10) }, (_v, k) => (
